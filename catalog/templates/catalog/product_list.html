@@ -7,20 +7,20 @@
 </div>
 <div class="container">
     <div class="row text-center">
-        {% for product in products %}
+        {% for prod in object_list %}
         <div class="col-3">
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">{{ product.name_product }}</h4>
+                    <h4 class="my-0 font-weight-normal">{{ prod.name_product }}</h4>
                 </div>
                 <div class="card-body">
-                    <h1 class="card-title pricing-card-title">{{ product.price }} руб/кг</h1>
-                    <img src="{{ product.image_product | media_filter}}" class="img-thumbnail">
+                    <h1 class="card-title pricing-card-title">{{ prod.price }} руб/кг</h1>
+                    <img src="{{ prod.image_product | media_filter}}" class="img-thumbnail">
                     <ul class="list-unstyled mt-3 mb-4 text-start m-3">
-                        <li>{{ product.category_id }}</li>
-                        <li>{{ product.description | truncatechars:10 }}</li>
+                        <li>{{ prod.category_id }}</li>
+                        <li>{{ prod.description | truncatechars:10 }}</li>
                     </ul>
-                    <a class="btn btn-primary" href="{% url 'catalog:product_info' product.pk %}"
+                    <a class="btn btn-primary" href="{% url 'catalog:product_detail' prod.pk %}"
                        role="button">Подробно</a>
                 </div>
             </div>

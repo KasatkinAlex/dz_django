@@ -8,21 +8,20 @@
 
 <div class="container">
 <div class="row text-center">
-
         <div class="col-6">
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">{{ product.name_product }}</h4>
+                    <h4 class="my-0 font-weight-normal">{{ object.name_product }}</h4>
                 </div>
                 <div class="card-body">
-                    <img src="{{ product.image_product | media_filter}}" class="img-thumbnail">
+                    <img src="{{ object.image_product | media_filter}}" class="img-thumbnail">
                     <ul class="list-unstyled mt-3 mb-4 text-start m-3">
-                        <li>ЦЕНА - {{ product.price }} руб/кг</li>
-                        <li>ОПИСАНИЕ - {{ product.description }}</li>
-                        <li>КАТЕГОРИЯ - {{ product.category_id }}</li>
+                        <li>ЦЕНА - {{ object.price }} руб/кг</li>
+                        <li>ОПИСАНИЕ - {{ object.description }}</li>
+                        <li>КАТЕГОРИЯ - {{ object.category_id }}</li>
 
                     </ul>
-                    <a class="btn btn-primary" href="{% url 'catalog:index' %}" role="button">Назад</a>
+                    <a class="btn btn-primary" href="{% url 'catalog:product_list' %}" role="button">Назад</a>
                 </div>
             </div>
         </div>
