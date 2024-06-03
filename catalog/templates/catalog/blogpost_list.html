@@ -23,8 +23,6 @@
                        role="button">Подробно</a>
                     <a class="btn btn-info" href="{% url 'catalog:blogpost_update' blogpost.pk %}" role="button">Редактировать</a>
                     <a class="btn btn-danger" href="{% url 'catalog:blogpost_delete' blogpost.pk %}" role="button">Удалить</a>
-                    <span class="badge text-bg-light">{{ blogpost.publication_sign }}</span>
-                    <span class="badge text-bg-light">{{ blogpost.views_count }}</span>
                 </div>
             </div>
         </div>
