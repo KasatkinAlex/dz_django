@@ -1,15 +1,12 @@
 from django.shortcuts import render
-from django.views.generic import DetailView, ListView
+from django.urls import reverse_lazy
+from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 
-from catalog.models import Product
+from catalog.models import Product, BlogPost
 
 
 class ProductListView(ListView):
     model = Product
-# def index(request):
-#     products = Product.objects.all()
-#     context = {'products': products}
-#     return render(request, "catalog/product_li.html", context)
 
 
 def contacts(request):
@@ -21,11 +18,30 @@ def contacts(request):
     return render(request, 'catalog/contacts.html')
 
 
-# def product_info(request, pk):
-#     product = Product.objects.get(pk=pk)
-#     context = {'product': product}
-#     return render(request, "catalog/product_info.html", context)
-
-
 class ProductDetailView(DetailView):
     model = Product
+
+
+class BlogPostListView(ListView):
+    model = BlogPost
+
+
+class BlogPostDetailView(DetailView):
+    model = BlogPost
+
+
+class BlogPostCreateView(CreateView):
+    model = BlogPost
+    fields = ('title', 'content', 'image', 'publication_sign')
+    success_url = reverse_lazy('catalog:blogpost')
+
+
+class BlogPostUpdateView(UpdateView):
+    model = BlogPost
+    fields = ('title', 'content', 'image', 'publication_sign')
+    success_url = reverse_lazy('catalog:blogpost')
+
+
+class BlogPostDeleteView(DeleteView):
+    model = BlogPost
+    success_url = reverse_lazy('catalog:blogpost')
