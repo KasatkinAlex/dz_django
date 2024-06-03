@@ -31,3 +31,22 @@ class Product(models.Model):
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
         ordering = ['name_product', 'created_at']  # Сортировка
+
+
+class BlogPost(models.Model):
+    title = models.CharField(max_length=150, verbose_name="Заголовок", help_text="Введите название записи блога")
+    slug = models.CharField(max_length=150, verbose_name="челевекочитаемая ссылка", null=True, blank=True)
+    content = models.TextField(verbose_name="содержимое", help_text="Введите содержимое блога")
+    image = models.ImageField(upload_to='blog_image/', verbose_name="превью (изображение)", null=True, blank=True,
+                              help_text="Загрузите изображение блога")
+    created_at = models.DateTimeField(verbose_name='Дата создания', auto_now_add=True)
+    publication_sign = models.BooleanField(default=True, verbose_name="признак публикации")
+    views_count = models.IntegerField(default=0, verbose_name="просмотры")
+
+    def __str__(self):
+        return f'{self.title} {self.publication_sign}'
+
+    class Meta:
+        verbose_name = 'Блог'
+        verbose_name_plural = 'Блоги'
+        ordering = ['created_at']
