@@ -50,3 +50,22 @@ class BlogPost(models.Model):
         verbose_name = 'Блог'
         verbose_name_plural = 'Блоги'
         ordering = ['created_at']
+
+
+class VersionProduct(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='version', null=True, blank=True)
+    version_number = models.IntegerField(verbose_name="номер версии", help_text="введите номер версии")
+    version_title = models.CharField(max_length=20, verbose_name="название версии", help_text="введитие название версии")
+    version_activ = models.BooleanField(default=False, verbose_name='Признак отображение на сайте')
+
+    def __str__(self):
+        if self.version_activ:
+            v_activ = 'активный'
+        else:
+            v_activ = 'не активный'
+        return f'{self.version_title} {v_activ}'
+
+    class Meta:
+        verbose_name = 'Версия'
+        verbose_name_plural = 'Версии'
+        ordering = ['version_activ']

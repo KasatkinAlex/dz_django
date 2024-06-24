@@ -18,6 +18,7 @@
                     <img src="{{ prod.image_product | media_filter}}" class="img-thumbnail">
                     <ul class="list-unstyled mt-3 mb-4 text-start m-3">
                         <li>{{ prod.category_id }}</li>
+                        <li>ВЕРСИЯ : {{ prod.active_version }}</li>
                         <li>{{ prod.description | truncatechars:10 }}</li>
                     </ul>
                     <a class="btn btn-primary" href="{% url 'catalog:product_detail' prod.pk %}"
