@@ -7,7 +7,7 @@
 </div>
 
 <div class="container">
-<div class="row text-center">
+    <div class="row text-center">
         <div class="col-6">
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
@@ -19,13 +19,17 @@
                         <li>ЦЕНА - {{ object.price }} руб/кг</li>
                         <li>ОПИСАНИЕ - {{ object.description }}</li>
                         <li>КАТЕГОРИЯ - {{ object.category_id }}</li>
+                        <li>Создал - {{ object.user_creator }}</li>
 
                     </ul>
                     <a class="btn btn-primary" href="{% url 'catalog:product_list' %}" role="button">Назад</a>
+                    {% if user.is_authenticated %}
                     <a class="btn btn-primary" href="{% url 'catalog:product_update' product.pk %}" role="button">Редактировать</a>
+                    {% endif %}
+
                 </div>
             </div>
         </div>
 
     </div>
-{% endblock %}
+    {% endblock %}
