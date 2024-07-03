@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import Users
+
 
 class Category(models.Model):
     name_category = models.CharField(max_length=100, verbose_name="Категория", help_text='Введите категорию')
@@ -23,6 +25,10 @@ class Product(models.Model):
     price = models.IntegerField(verbose_name='Цена за покупку', help_text='Введите цену продукта')
     created_at = models.DateTimeField(verbose_name='Дата создания', auto_now_add=True)
     updated_at = models.DateField(verbose_name='Дата последнего изменения', auto_now=True)
+
+    user_creator = models.ForeignKey(Users, verbose_name="Пользователь который создал продукт",
+                                     help_text='Укажите пользователя который создал продукт',
+                                     on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return f'{self.name_product} {self.price}'

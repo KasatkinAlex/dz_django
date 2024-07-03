@@ -47,8 +47,8 @@ def password_reset(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         user = get_object_or_404(Users, email=email)
-        digits = '0123456789abc'
-        new_password = random.choice(digits)
+        digits = '0123456789abcdfABCDF'
+        new_password = ''.join(random.sample(digits, 8))
         user.password = make_password(new_password)
         user.save()
         send_mail(
