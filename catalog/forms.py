@@ -28,3 +28,9 @@ class ProductForm(StyleFormMixin, ModelForm):
             raise forms.ValidationError('Ошибка, связанная с названием продукта')
 
         return cleaned_data
+
+
+class ProductModeratorForm(StyleFormMixin, ModelForm):
+    class Meta:
+        model = Product
+        fields = ('description', 'category_id', 'published_status')
