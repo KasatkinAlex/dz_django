@@ -14,10 +14,10 @@
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{ form.as_p }}
-                        <button type="submit" class="btn btn-primary">Создать</button>
+                        <button type="submit" class="btn btn-primary">Сохранить</button>
                         <a class="btn btn-danger" href="{% url 'catalog:product_list' %}"
                            role="button">Отмена</a>
-                        {% if product.pk %}
+                        {% if product.pk and perms.user.is_superuser%}
                             <a class="btn btn-danger" href="{% url 'catalog:product_delete' product.pk %}" role="button">Удалить</a>
                         {% endif %}
                     </form>

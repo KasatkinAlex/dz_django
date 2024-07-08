@@ -1,10 +1,11 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 from pytils.templatetags.pytils_translit import slugify
 
-from catalog.forms import ProductForm
+from catalog.forms import ProductForm, ProductModeratorForm
 from catalog.models import Product, BlogPost, VersionProduct
 
 
@@ -40,10 +41,11 @@ class ProductDetailView(DetailView):
     model = Product
 
 
-class ProductCreateView(LoginRequiredMixin, CreateView):
+class ProductCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:product_list')
+    permission_required = 'catalog.add_product'
 
     def form_valid(self, form):
         product = form.save()
@@ -59,8 +61,18 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
-    form_class = ProductForm
+    # form_class = ProductForm
     success_url = reverse_lazy('catalog:product_list')
+
+    def get_form_class(self):
+        user = self.request.user
+        if user.is_superuser or user == self.object.user_creator:
+            return ProductForm
+        elif (user.has_perm("catalog.set_published_status") and
+                user.has_perm("catalog.set_description") and
+                user.has_perm("catalog.set_category_id")):
+            return ProductModeratorForm
+        raise PermissionDenied
 
     def form_valid(self, form):
         if form.is_valid():
@@ -70,9 +82,10 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
-class ProductDeleteView(LoginRequiredMixin, DeleteView):
+class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Product
     success_url = reverse_lazy('catalog:product_list')
+    permission_required = 'catalog.delete_product'
 
 
 class BlogPostListView(ListView):

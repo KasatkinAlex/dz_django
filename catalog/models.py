@@ -30,6 +30,8 @@ class Product(models.Model):
                                      help_text='Укажите пользователя который создал продукт',
                                      on_delete=models.SET_NULL, null=True)
 
+    published_status = models.BooleanField(default=False, verbose_name="признак публикации")
+
     def __str__(self):
         return f'{self.name_product} {self.price}'
 
@@ -37,6 +39,12 @@ class Product(models.Model):
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
         ordering = ['name_product', 'created_at']  # Сортировка
+
+        permissions = [
+            ("set_published_status", "Изменять активацию публикации"),
+            ("set_description", "Изменять описание продука"),
+            ("set_category_id", "Изменять категорию продука")
+        ]
 
 
 class BlogPost(models.Model):
