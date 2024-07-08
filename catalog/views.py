@@ -37,7 +37,7 @@ def contacts(request):
     return render(request, 'catalog/contacts.html')
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
 
 
