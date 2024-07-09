@@ -6,7 +6,8 @@ from django.views.generic import DetailView, ListView, CreateView, UpdateView, D
 from pytils.templatetags.pytils_translit import slugify
 
 from catalog.forms import ProductForm, ProductModeratorForm
-from catalog.models import Product, BlogPost, VersionProduct
+from catalog.models import Product, BlogPost, VersionProduct, Category
+from catalog.services import get_list_cache
 
 
 class ProductListView(ListView):
@@ -139,3 +140,10 @@ class BlogPostUpdateView(UpdateView):
 class BlogPostDeleteView(DeleteView):
     model = BlogPost
     success_url = reverse_lazy('catalog:blogpost')
+
+
+class CategoryListView(ListView):
+    model = Category
+
+    def get_queryset(self):                      #метод для получения данных
+        return get_list_cache(Category)
